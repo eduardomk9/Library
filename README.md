@@ -14,7 +14,7 @@ Infraestructure -> Persistence, Services and Connected Services.</br>
 TODO, Unit Test Layer with NUnit
 
 
-The application is ready to be deployed on Kubernetes. Follow these simple steps:
+The application is ready to be deployed on Kubernetes. Follow these steps:
 
 Dockerize the application using a Dockerfile.
 Publish the Docker image on Kubernetes.
