@@ -13,6 +13,7 @@ namespace WebAPI.Configurations
             CreateMap<Book, BookModel>();
             CreateMap<BookModel, Book>();
 
+
         }
 
     }

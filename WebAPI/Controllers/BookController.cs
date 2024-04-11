@@ -1,4 +1,5 @@
 ﻿using Core.Business;
+using Core.DTOs.Book;
 using Core.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -41,11 +42,11 @@ namespace WebAPI.Controllers
         [HttpPost("GetBooks")]
         [SwaggerResponse(200, "Informações", typeof(BookModel))]
         [SwaggerResponse(400, "Erro", typeof(string))]
-        public async Task<IActionResult> GetBooksAsync([FromBody] BookModel model)
+        public async Task<IActionResult> GetBooksAsync([FromBody] GetBooksDto model)
         {
             try
             {
-                var books = await _bookBusiness.GetBooksAsync();
+                var books = await _bookBusiness.GetBooksAsync(model);
                 return Ok(books);
             }
             catch (Exception ex)
