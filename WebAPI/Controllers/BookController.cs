@@ -38,13 +38,13 @@ namespace WebAPI.Controllers
         /// </remarks>
         /// <param name="model">Modelo de entrada</param>
         [HttpPost("GetBooks")]
-        [SwaggerResponse(200, "Informações", typeof(BookModel))]
+        [SwaggerResponse(200, "Informações", typeof(IEnumerable<BookModel>))]
         [SwaggerResponse(400, "Erro", typeof(string))]
         public async Task<IActionResult> GetBooksAsync([FromBody] GetBooksDto model)
         {
             try
             {
-                var books = await _bookBusiness.GetBooksAsync(model);
+                IEnumerable<BookModel> books = await _bookBusiness.GetBooksAsync(model);
                 return Ok(books);
             }
             catch (Exception ex)

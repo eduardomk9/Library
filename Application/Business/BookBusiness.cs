@@ -2,7 +2,9 @@
 using Core.Business;
 using Core.DTOs.Book;
 using Core.Entities.GenericEnterpise;
+using Core.Models;
 using Core.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 
@@ -17,7 +19,7 @@ namespace Application.Business
         private readonly IMapper _mapper = mapper;
         private readonly IGenericEnterpriseRepository<Book> _repositoryGEBook = repositoryBook;
 
-        public async Task<IEnumerable<Book>> GetBooksAsync(GetBooksDto getBooksDto)
+        public async Task<IEnumerable<BookModel>> GetBooksAsync(GetBooksDto getBooksDto)
         {
             try
             {
@@ -26,13 +28,13 @@ namespace Application.Business
                 switch (getBooksDto.Type.ToLower())
                 {
                     case "title":
-                        filter = book => book.Title.Contains(getBooksDto.Value, StringComparison.CurrentCultureIgnoreCase);
+                        filter = book => EF.Functions.Like(book.Title.ToLower(), $"%{getBooksDto.Value.ToLower()}%");
                         break;
                     case "firstname":
-                        filter = book => book.FirstName.Contains(getBooksDto.Value, StringComparison.CurrentCultureIgnoreCase);
+                        filter = book => EF.Functions.Like(book.FirstName.ToLower(), $"%{getBooksDto.Value.ToLower()}%");
                         break;
                     case "lastname":
-                        filter = book => book.LastName.Contains(getBooksDto.Value, StringComparison.CurrentCultureIgnoreCase);
+                        filter = book => EF.Functions.Like(book.LastName.ToLower(), $"%{getBooksDto.Value.ToLower()}%");
                         break;
                     case "isbn":
                         filter = book => book.Isbn == null || book.Isbn.Contains(getBooksDto.Value); // Handle null Isbn
@@ -46,9 +48,11 @@ namespace Application.Business
                     default:
                         throw new ArgumentException($"Invalid search type: {getBooksDto.Type}");
                 }
-                IEnumerable<Book> books =  await _repositoryGEBook.GetAll(filter);
+                IEnumerable<Book> books = await _repositoryGEBook.GetAll(filter);
+                IEnumerable<BookModel> bookModels = _mapper.Map<IEnumerable<Book>, IEnumerable<BookModel>>(books);
 
-                return books;
+                return bookModels;
+
             }
             catch (Exception ex)
             {

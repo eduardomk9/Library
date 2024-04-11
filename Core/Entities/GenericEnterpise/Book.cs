@@ -1,7 +1,11 @@
-﻿namespace Core.Entities.GenericEnterpise;
+﻿using Newtonsoft.Json;
+
+namespace Core.Entities.GenericEnterpise;
 
 public partial class Book
 {
+    [JsonProperty("Id")]
+
     public int BookId { get; set; }
 
     public string Title { get; set; } = null!;
