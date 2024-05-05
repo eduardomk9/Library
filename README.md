@@ -47,11 +47,7 @@ ALTER TABLE [dbo].[books] ADD  DEFAULT ((0)) FOR [copies_in_use]
 GO
 ```
 To publish:</br>
-The application is ready to be deployed on Kubernetes. Follow these steps:</br>
-Dockerize the application using a Dockerfile.</br>
-Publish the Docker image on Kubernetes.</br>
-Apply the Kubernetes manifests.</br>
-In minutes, the application will be ready and running on Kubernetes.</br>
+TODO
 
 ## 📋 Usage
 The Swagger is ready to use, if you run the project as Debug mode it will be not necessary to authenticate to call other methods, but if you dont, you have to authenticate with a fixed login and password, adjust the login and passwrdo if you need in appsettings.json (the way the system is developted the application is ready to put a login with database or auth with a fixed token, or even AD).
